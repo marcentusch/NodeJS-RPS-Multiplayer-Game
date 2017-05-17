@@ -1,0 +1,36 @@
+
+.container {
+	margin: 50px auto;
+}
+
+h1 {
+	text-align: center;
+}
+
+
+.iconContainer {
+	display: inline-block;
+}
+
+.option {
+	background-color: #d3d3d3;
+	height: 200px;
+	font-size: 170px;
+	text-align: center;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+i {
+	position: relative;
+	top: -20px;
+}
+
+.chosenIcon {
+	border: 2px solid black;
+}
+
+
+#test {
+	background-color: black;
+}

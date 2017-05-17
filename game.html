@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<title>Rock, Paper, Scissors</title>
+</head>
+<body>
+
+<div id="lblNickname">
+	<input id="nickname" type="text" name="txtNickname" placeholder="Enter your nickname here...">
+</div>
+
+
+<div class="container">
+	
+
+
+	<h1 id="statusHeading" class=""> Waiting or something else </h1>
+
+
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="option" id="rock">
+				<i class="fa fa-hand-rock-o" aria-hidden="true"></i>
+			</div>
+		</div>
+
+		<div class="col-lg-4">
+			<div class="option"  id="paper">
+				<i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+			</div>
+		</div>
+
+		<div class="col-lg-4">
+			<div class="option" id="scissor">
+				<i class="fa fa-hand-scissors-o" aria-hidden="true"></i>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+
+
+	<!-- ____________________________________________________________________________________________ -->
+	<!-- SERVER -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.slim.min.js"></script>
+	<!-- CLIENT -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+	var socket = io.connect("http://localhost:8080")
+
+
+	$("#rock").click(function(){
+		var sNickname = $("#nickname").val();
+		socket.emit("Hi server, I am clicking the ROCK button!", 
+			{
+				"nickname": sNickname,
+				"choice": "rock"
+			}
+		);
+		$(this).addClass( "chosenIcon" );
+		$(".option:not(#rock)").removeClass( "chosenIcon" );
+	});
+
+	$("#paper").click(function(){
+		var sNickname = $("#nickname").val();
+		socket.emit("Hi server, I am clicking the PAPER button!", 
+			{
+				"nickname": sNickname,
+				"choice": "paper"
+			}
+		);
+		$(this).addClass( "chosenIcon" );
+		$(".option:not(#paper)").removeClass( "chosenIcon" );
+	});
+
+	$("#scissor").click(function(){
+		var sNickname = $("#nickname").val();
+		socket.emit("Hi server, I am clicking the SCISSOR button!", 
+			{
+				"nickname": sNickname,
+				"choice": "scissor"
+			}
+		);
+		$(this).addClass( "chosenIcon" );
+		$(".option:not(#scissor)").removeClass( "chosenIcon" );
+	});
+
+	socket.on("did i win", function(jData){
+		console.log(jData);
+
+		// Check what the other player choose and show it to the player
+		
+		if(jData.jPlayer == "scissor"){
+			$("#scissor").addClass("test");
+		} else if(jData.choice == "rock") {
+			$("#rock").addClass("test");
+		} else {
+			$("#paper").addClass("test");
+		}
+
+	});
+
+</script>
+</html>
