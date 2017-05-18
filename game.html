@@ -8,105 +8,55 @@
 </head>
 <body>
 
+<h1>Welcome to the Rock Paper Scissors game!</h1>
+
+<hr>
+
 <div id="lblNickname">
 	<input id="nickname" type="text" name="txtNickname" placeholder="Enter your nickname here...">
 </div>
 
+<hr>
 
 <div class="container">
-	
-
-
-	<h1 id="statusHeading" class=""> Waiting or something else </h1>
-
-
+	<h1 id="statusHeading" class=""> Make your choice ... </h1>
 	<div class="row">
 		<div class="col-lg-4">
 			<div class="option" id="rock">
-				<i class="fa fa-hand-rock-o" aria-hidden="true"></i>
+				<i class="fa fa-hand-rock-o gameIcons" aria-hidden="true"></i>
 			</div>
 		</div>
-
 		<div class="col-lg-4">
 			<div class="option"  id="paper">
-				<i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+				<i class="fa fa-hand-paper-o gameIcons" aria-hidden="true"></i>
 			</div>
 		</div>
-
 		<div class="col-lg-4">
 			<div class="option" id="scissor">
-				<i class="fa fa-hand-scissors-o" aria-hidden="true"></i>
+				<i class="fa fa-hand-scissors-o gameIcons" aria-hidden="true"></i>
 			</div>
 		</div>
-
 	</div>
+
+	<div class="hide resultIconsDiv" id="lose-icon">
+		<i class="fa fa-times-circle-o resultIcons" aria-hidden="true"></i>
+	</div>
+
+	<div class="hide resultIconsDiv" id="tie-icon">
+		<i class="fa fa-black-tie resultIcons" aria-hidden="true"></i>
+	</div>
+
+	<div class="hide resultIconsDiv" id="win-icon">
+		<i class="fa fa-check-circle-o resultIcons" aria-hidden="true"></i>
+	</div>
+	
 </body>
 
-
-
-	<!-- ____________________________________________________________________________________________ -->
 	<!-- SERVER -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.slim.min.js"></script>
 	<!-- CLIENT -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- SCRIPT -->
+	<script src="script.js" type="text/javascript"></script>
 
-<script>
-	var socket = io.connect("http://localhost:8080")
-
-	var iChoose = "";
-
-	$("#rock").click(function(){
-		var sNickname = $("#nickname").val();
-		iChoose = "rock";
-		socket.emit("Hi server, I am clicking the ROCK button!", 
-			{
-				"nickname": sNickname,
-				"choice": "rock"
-			}
-		);
-		$(this).addClass( "chosenIcon" );
-		$(".option:not(#rock)").removeClass( "chosenIcon" );
-	});
-
-	$("#paper").click(function(){
-		var sNickname = $("#nickname").val();
-		iChoose = "paper";
-		socket.emit("Hi server, I am clicking the PAPER button!", 
-			{
-				"nickname": sNickname,
-				"choice": "paper"
-			}
-		);
-		$(this).addClass( "chosenIcon" );
-		$(".option:not(#paper)").removeClass( "chosenIcon" );
-	});
-
-	$("#scissor").click(function(){
-		var sNickname = $("#nickname").val();
-		iChoose = "scissor";
-		socket.emit("Hi server, I am clicking the SCISSOR button!", 
-			{
-				"nickname": sNickname,
-				"choice": "scissor"
-			}
-		);
-		$(this).addClass( "chosenIcon" );
-		$(".option:not(#scissor)").removeClass( "chosenIcon" );
-	});
-
-	socket.on("did i win", function(jData){
-		var sNickname = $("#nickname").val();	
-
-		// Checks the result and shows it in the top header
-		if(jData.jPlayerOne.nickname == sNickname){
-			$("#statusHeading").text(jData.jPlayerOne.result);
-		} else {
-			$("#statusHeading").text(jData.jPlayerTwo.result);
-		}
-
-		// Show what the other player choose
-
-	});
-
-</script>
 </html>

@@ -6,7 +6,7 @@ var io         = require("socket.io")(server);
 
 app.use(express.static(__dirname + "/lib"));
 
-// Hardcore players
+// Hardcoded players
 jPlayerOne = {"nickname":"a", "choice":"", "waiting":"true", "result": ""};
 jPlayerTwo = {"nickname":"b", "choice":"", "waiting":"true", "result": ""};
 
@@ -74,7 +74,6 @@ io.on( "connection" , function( oSocket ){
 			io.emit("did i win", {
 				jPlayerOne,
 				jPlayerTwo
-
 			});
 			// Sets both players to wait, because new round has started
 			reset();
@@ -124,16 +123,6 @@ function reset(){
 	jPlayerTwo.waiting = true;
 }
 
-function sendResults(){
-	var finalResult = compare(jPlayerOne.choice, jPlayerTwo.choice);
-
-	if(jPlayerOne.waiting == false && jPlayerTwo.waiting == false){
-		io.emit("did i win", {
-			answer: finalResult
-		});
-	}
-}
-
 server.listen(8080, function(){
-	console.log("Server listening...")
+	console.log("Server listening on port 8080...")
 });

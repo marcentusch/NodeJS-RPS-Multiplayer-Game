@@ -1,36 +1,91 @@
+body{
+	background-color: #f7fff7;
+	color: #1A535C;
+}
 
 .container {
 	margin: 50px auto;
 }
 
-h1 {
+#lblNickname {
+	display: flex;
+	justify-content: center;
+}
+
+#nickname {
+	margin-top: 1%;
+	margin-bottom: 1%;
+	height: 60px;
+	width: 500px;
+	font-size: 20px;
 	text-align: center;
 }
 
+h1 {
+	text-align: center;
+	margin-bottom: 40px;
+	font-weight: bold;
+	text-shadow: 3px 2px 5px rgba(150, 150, 150, 0.85);
+}
 
 .iconContainer {
 	display: inline-block;
 }
 
 .option {
-	background-color: #d3d3d3;
+	background-color: #4ECDC4;
+	color: #1A535C;
 	height: 200px;
 	font-size: 170px;
 	text-align: center;
 	border-radius: 20px;
 	cursor: pointer;
+	margin-bottom: 20px;
+	transition: 0.5s;
 }
 
-i {
+.gameIcons {
 	position: relative;
 	top: -20px;
 }
 
 .chosenIcon {
-	border: 2px solid black;
+	border: 4px solid black;
+}
+
+.hide {
+	display: none;
+}
+
+.resultIconsDiv {
+	text-align: center;
 }
 
 
-#test {
-	background-color: orange;
+
+/* Specific result icons color */
+
+.fa-black-tie {
+	color: #FFE66D;
+}
+
+.fa-times-circle-o {
+	color: #FF6B6B;
+}
+
+.fa-check-circle-o {
+	color: #2BA84A;
+}
+
+.resultIcons {
+	font-size: 280px;
+	transition: 1s;
+
+	/* Animation fade in */
+    animation: fadein 1.5s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
