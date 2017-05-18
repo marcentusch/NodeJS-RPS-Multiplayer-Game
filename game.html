@@ -53,9 +53,11 @@
 <script>
 	var socket = io.connect("http://localhost:8080")
 
+	var iChoose = "";
 
 	$("#rock").click(function(){
 		var sNickname = $("#nickname").val();
+		iChoose = "rock";
 		socket.emit("Hi server, I am clicking the ROCK button!", 
 			{
 				"nickname": sNickname,
@@ -68,6 +70,7 @@
 
 	$("#paper").click(function(){
 		var sNickname = $("#nickname").val();
+		iChoose = "paper";
 		socket.emit("Hi server, I am clicking the PAPER button!", 
 			{
 				"nickname": sNickname,
@@ -80,6 +83,7 @@
 
 	$("#scissor").click(function(){
 		var sNickname = $("#nickname").val();
+		iChoose = "scissor";
 		socket.emit("Hi server, I am clicking the SCISSOR button!", 
 			{
 				"nickname": sNickname,
@@ -91,17 +95,16 @@
 	});
 
 	socket.on("did i win", function(jData){
-		console.log(jData);
+		var sNickname = $("#nickname").val();	
 
-		// Check what the other player choose and show it to the player
-		
-		if(jData.jPlayer == "scissor"){
-			$("#scissor").addClass("test");
-		} else if(jData.choice == "rock") {
-			$("#rock").addClass("test");
+		// Checks the result and shows it in the top header
+		if(jData.jPlayerOne.nickname == sNickname){
+			$("#statusHeading").text(jData.jPlayerOne.result);
 		} else {
-			$("#paper").addClass("test");
+			$("#statusHeading").text(jData.jPlayerTwo.result);
 		}
+
+		// Show what the other player choose
 
 	});
 

@@ -7,8 +7,8 @@ var io         = require("socket.io")(server);
 app.use(express.static(__dirname + "/lib"));
 
 // Hardcore players
-jPlayerOne = {"nickname":"a", "choice":"", "waiting":"true"}
-jPlayerTwo = {"nickname":"b", "choice":"", "waiting":"true"}
+jPlayerOne = {"nickname":"a", "choice":"", "waiting":"true", "result": ""};
+jPlayerTwo = {"nickname":"b", "choice":"", "waiting":"true", "result": ""};
 
 app.get("/", function(req, res){
 	res.sendFile(__dirname + "/game.html");
@@ -25,12 +25,13 @@ io.on( "connection" , function( oSocket ){
 			jPlayerTwo.choice  = "rock";
 			jPlayerTwo.waiting = false;
 		}
-		var finalResult = compare(jPlayerOne.choice, jPlayerTwo.choice);
 		if(jPlayerOne.waiting == false && jPlayerTwo.waiting == false){
+			compare();
 			io.emit("did i win", {
-				answer: finalResult,
-				playerOneAnswer: jPlayerOne.choice,
-				playerTwoAnswer: jPlayerTwo.choice
+				jPlayerOne,
+				jPlayerTwo
+				// playerOneAnswer: jPlayerOne.choice,
+				// playerTwoAnswer: jPlayerTwo.choice
 			});
 			// Sets both players to wait, because new round has started
 			reset();
@@ -46,12 +47,13 @@ io.on( "connection" , function( oSocket ){
 			jPlayerTwo.choice = "paper";
 			jPlayerTwo.waiting = false;
 		}
-		var finalResult = compare(jPlayerOne.choice, jPlayerTwo.choice);
 		if(jPlayerOne.waiting == false && jPlayerTwo.waiting == false){
+			compare();
 			io.emit("did i win", {
-				answer: finalResult,
-				playerOneAnswer: jPlayerOne.choice,
-				playerTwoAnswer: jPlayerTwo.choice
+				jPlayerOne,
+				jPlayerTwo
+				// playerOneAnswer: jPlayerOne.choice,
+				// playerTwoAnswer: jPlayerTwo.choice
 			});
 			// Sets both players to wait, because new round has started
 			reset();
@@ -67,12 +69,12 @@ io.on( "connection" , function( oSocket ){
 			jPlayerTwo.choice = "scissor";
 			jPlayerTwo.waiting = false;
 		}
-		var finalResult = compare(jPlayerOne.choice, jPlayerTwo.choice);
 		if(jPlayerOne.waiting == false && jPlayerTwo.waiting == false){
+			compare();
 			io.emit("did i win", {
-				answer: finalResult,
-				playerOneAnswer: jPlayerOne.choice,
-				playerTwoAnswer: jPlayerTwo.choice
+				jPlayerOne,
+				jPlayerTwo
+
 			});
 			// Sets both players to wait, because new round has started
 			reset();
@@ -81,32 +83,38 @@ io.on( "connection" , function( oSocket ){
 });
 
 
-function compare(choice1, choice2){
-  if(choice1 === choice2){
-      return "The result is a tie!";       
+function compare(){
+  if(jPlayerOne.choice === jPlayerTwo.choice){
+      jPlayerOne.result = "tie";
+      jPlayerTwo.result = "tie";       
   }
-  else if(choice1 === "rock"){
-    if(choice2 === "scissor"){
-      return "rock wins";
+  else if(jPlayerOne.choice === "rock"){
+    if(jPlayerTwo.choice === "scissor"){
+      jPlayerOne.result = "won";
+      jPlayerTwo.result = "lost";
     }
     else{
-      return "paper wins";   
+      jPlayerOne.result = "lost";
+      jPlayerTwo.result = "won";   
     }
   }
-  else if(choice1 === "paper"){
-    if(choice2 === "rock"){
-      return "paper wins";
+  else if(jPlayerOne.choice === "paper"){
+    if(jPlayerTwo.choice === "rock"){
+      jPlayerOne.result = "won";
+      jPlayerTwo.result = "lost";
     }
     else{
-        return "scissor wins";    
+        jPlayerOne.result = "lost";
+      	jPlayerTwo.result = "won";    
     }
   }
-  else if(choice1 === "scissor"){
-    if(choice2 === "rock"){
-      return "rock wins";
-    }
-    else{
-      return "scissor wins";    
+  else if(jPlayerOne.choice === "scissor"){
+    if(jPlayerTwo.choice === "rock"){
+     	jPlayerOne.result = "lost";
+      	jPlayerTwo.result = "won";
+    } else{
+      jPlayerOne.result = "won";
+      jPlayerTwo.result = "lost";    
     }
   }
 }
