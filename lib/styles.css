@@ -12,6 +12,14 @@ body{
 	justify-content: center;
 }
 
+
+h1 {
+	text-align: center;
+	margin-bottom: 40px;
+	font-weight: bold;
+	text-shadow: 1px 1px 3px rgba(150, 150, 150, 0.8);
+}
+
 #nickname {
 	margin-top: 1%;
 	margin-bottom: 1%;
@@ -19,13 +27,18 @@ body{
 	width: 500px;
 	font-size: 20px;
 	text-align: center;
+	border-radius: 10px;
+	border: 1px solid black;
 }
 
-h1 {
-	text-align: center;
-	margin-bottom: 40px;
-	font-weight: bold;
-	text-shadow: 3px 2px 5px rgba(150, 150, 150, 0.85);
+#createPlayer {
+	border: none;
+	margin: 1% 0 1% 15px;
+	height: 60px;
+	font-size: 20px;
+	background-color:  #4CAF50;
+	border-radius: 10px;
+	outline: none;
 }
 
 .iconContainer {
@@ -58,7 +71,12 @@ h1 {
 }
 
 .opponentChoiceHighlight {
-	background-color: #FF6B6B;
+	background-color: rgba(102, 51, 153, .38);
+}
+
+.disableChoices {
+	pointer-events: none;
+	opacity: .5;
 }
 
 .resultIconsDiv {

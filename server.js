@@ -14,8 +14,8 @@ app.use(express.static(__dirname + "/lib"));
 
 
 // Hardcoded players
-jPlayerOne = {"nickname":"a", "choice":"", "waiting":"true", "result": ""};
-jPlayerTwo = {"nickname":"b", "choice":"", "waiting":"true", "result": ""};
+jPlayerOne = {"nickname":"", "choice":"", "waiting":"true", "result": ""};
+jPlayerTwo = {"nickname":"", "choice":"", "waiting":"true", "result": ""};
 
 app.get("/", function(req, res){
 	res.sendFile(__dirname + "/game.html");
@@ -23,9 +23,18 @@ app.get("/", function(req, res){
 
 io.on( "connection" , function( oSocket ){
 	
+	oSocket.on("I want to create a new player", function(jData){
+		if(jPlayerOne.nickname == "" || jPlayerOne.nickname != jData.nickname){
+			jPlayerOne.nickname = jData.nickname;
+		} else if(jPlayerTwo.nickname == "" || jPlayerTwo.nickname != jData.nickname) {
+			jPlayerTwo.nickname = jData.nickname;
+		}
+		
+	});
+
 	// THE SERVER RETRIVES SOMETHING FROM THE CLIENT
 	oSocket.on( "Hi server, I am clicking the ROCK button!" , function( jData ){
-		if(jData.nickname == "a") {
+		if(jData.nickname == jPlayerOne.nickname) {
 			jPlayerOne.choice  = "rock";
 			jPlayerOne.waiting = false;
 		} else {
@@ -47,7 +56,7 @@ io.on( "connection" , function( oSocket ){
 
 	// THE SERVER RETRIVES SOMETHING FROM THE CLIENT
 	oSocket.on( "Hi server, I am clicking the PAPER button!" , function( jData ){
-		if(jData.nickname == "a") {
+		if(jData.nickname == jPlayerOne.nickname) {
 			jPlayerOne.choice = "paper";
 			jPlayerOne.waiting = false;
 		} else {
@@ -69,7 +78,7 @@ io.on( "connection" , function( oSocket ){
 
 	// THE SERVER RETRIVES SOMETHING FROM THE CLIENT
 	oSocket.on( "Hi server, I am clicking the SCISSOR button!" , function( jData ){
-		if(jData.nickname == "a") {
+		if(jData.nickname == jPlayerOne.nickname) {
 			jPlayerOne.choice = "scissor";
 			jPlayerOne.waiting = false;
 		} else {
