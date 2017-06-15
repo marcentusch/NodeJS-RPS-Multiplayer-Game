@@ -4,7 +4,14 @@ var bodyParser = require("body-parser");
 var server     = require("http").Server(app);
 var io         = require("socket.io")(server);
 
+
 app.use(express.static(__dirname + "/lib"));
+
+
+// // Example of importing in Node
+// var importedStuff  = require("./testImport.js");
+// importedStuff.testFunction();
+
 
 // Hardcoded players
 jPlayerOne = {"nickname":"a", "choice":"", "waiting":"true", "result": ""};
